@@ -136,3 +136,19 @@ func TestCurry5(t *testing.T) {
 	is.Equal(24, f4(0))
 	is.Equal(14, f4(-10))
 }
+
+func TestCompose(t *testing.T) {
+	t.Parallel()
+	is := assert.New(t)
+
+	sumBy2 := func(x int) int { return x + 2 }
+
+	mulBy3 := func(x int) int { return x * 3 }
+
+	sumBy2AndMulBy3 := Compose(mulBy3, sumBy2)
+	mulBy3AndSumBy2 := Compose(sumBy2, mulBy3)
+
+	val := 1
+	is.Equal(9, sumBy2AndMulBy3(val))
+	is.Equal(5, mulBy3AndSumBy2(val))
+}

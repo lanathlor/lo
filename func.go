@@ -87,3 +87,9 @@ func Curry5[A, B, C, D, E, R any](f func(A, B, C, D, E) R) func(A) func(B) func(
 		}
 	}
 }
+
+func Compose[T, U, V any](f func(U) V, g func(T) U) func(T) V {
+	return func(t T) V {
+		return f(g(t))
+	}
+}
