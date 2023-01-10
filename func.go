@@ -88,8 +88,14 @@ func Curry5[A, B, C, D, E, R any](f func(A, B, C, D, E) R) func(A) func(B) func(
 	}
 }
 
+// Compose returns new function that, when called, returns the result of calling g and then f with the result from g
 func Compose[T, U, V any](f func(U) V, g func(T) U) func(T) V {
 	return func(t T) V {
 		return f(g(t))
 	}
+}
+
+// Pipe returns new function that, when called, returns the result of calling f and then g with the result from f
+func Pipe[T, U, V any](f func(T) U, g func(U) V) func(T) V {
+	return Compose(g, f)
 }
